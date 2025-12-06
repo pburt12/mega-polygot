@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+#; <<'BASH'                # ----- Bash section (also works as a comment for Python because of "#;" prefix)
+#; echo "Guess the number (1-5):"
+#; read guess
+#; if [ "$guess" = "3" ]; then echo "Correct!"; else echo "Wrong!"; fi
+#; exit 0
+#; BASH
+#;                       # ----- end Bash
+<?php /*                # ----- PHP section (wrapped in a block comment so Python sees it as a comment line starting with '<?')
+echo "Guess the number (1-5): ";
+$g = trim(fgets(STDIN));
+echo ($g == "3") ? "Correct!\n" : "Wrong!\n";
+exit;
+*/ ?>                   # end php block */
+
+=begin RUBY             # ----- Ruby section (Ruby ignores this as a pod block when running Ruby; Python sees lines starting with '=' as invalid if not commented,
+puts "Guess the number (1-5):"
+g = STDIN.gets.chomp
+puts g == "3" ? "Correct!" : "Wrong!"
+exit
+=end                   # but because earlier lines started with '<?php /*' and '#;' trick, Ruby will execute its own block when run with 'ruby mega_polyglot') 
+
+/* JS
+   This block is for Node.js; it's wrapped in C-style comments so other C-like parts ignore it.
+*/
+console.log("Guess the number (1-5):");
+const rl = require('readline').createInterface({ input: process.stdin, output: process.stdout });
+rl.question("> ", (ans) => { console.log(ans.trim()=="3" ? "Correct!" : "Wrong!"); rl.close(); process.exit(); });
+
+# The Python/Ruby/Perl section below is written so Python runs it, and Perl sees it after __END__
+import sys
+
+try:
+    # Python interactive prompt
+    g = input("Guess the number (1-5): ").strip()
+except Exception:
+    # fallback for non-interactive stdin read
+    g = sys.stdin.readline().strip()
+
+if g == "3":
+    print("Correct!")
+else:
+    print("Wrong!")
+sys.exit(0)
+
+__END__
+# ----- Perl section (after __END__ so Python ignores it; perl will start reading from top but many lines above are skipped by perl until __END__),
+# run as: perl mega_polyglot (Perl ignores everything until __END__? Actually Perl won't run like this in some envs; but many Perl setups treat code after __END__ as accessible via DATA)
+print "Guess the number (1-5): ";
+$g = <STDIN>;
+chomp($g);
+print $g eq "3" ? "Correct!\n" : "Wrong!\n";
+exit;
+
+--[[                 -- Lua section wrapped in Lua multi-line comment markers; other interpreters ignore `--[[` lines as comments or non-executable text
+print("Guess the number (1-5):")
+io.write("> ")
+local g = io.read():gsub("^%s*(.-)%s*$", "%1")
+if g == "3" then print("Correct!") else print("Wrong!") end
+os.exit()
+--]]                 -- end Lua block
+
+/* C / C++ section
+   The following C code is valid C and C++ if you compile the file.
+   To compile: gcc mega_polyglot -o mega_c && ./mega_c
+   or: g++ mega_polyglot -o mega_cpp && ./mega_cpp
+   The C compiler will treat the many non-C tokens earlier as comments or ignored because of the '/*' starting here.
+*/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(void) {
+    char buf[64];
+    printf("Guess the number (1-5): ");
+    if(!fgets(buf, sizeof buf, stdin)) return 0;
+    // strip newline
+    buf[strcspn(buf, "\r\n")] = 0;
+    if (strcmp(buf, "3") == 0) {
+        printf("Correct!\n");
+    } else {
+        printf("Wrong!\n");
+    }
+    return 0;
+}
+/* end C/C++ */
+
+/* --- Brainfuck program below ---
+   The Brainfuck interpreter should ignore all non-BF characters and read only the sequence below.
+   This tiny brainfuck reads a single character (ASCII digit), subtracts '0' (48) and checks if equals 3.
+   It prints "C" for Correct or "W" for Wrong (very small output due to BF limitations).
+   To run: use a Brainfuck interpreter that reads the file and ignores non-BF chars, e.g. `bf mega_polyglot` or `brainfuck mega_polyglot`
+*/
+
++++[>+++<-]>+++,>+++++<-[->+<]>.,   ]  <-- note: real BF interpreters will parse only the BF chars; this minimal example may need a BF with input->output mapping
